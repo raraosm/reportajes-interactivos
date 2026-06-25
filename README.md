@@ -4,7 +4,7 @@
 
 ### Periodismo inmersivo, libre y sin código
 
-*Crea reportajes con scroll animado, gráficos, audio, video y portadas a pantalla completa directamente desde el navegador — y ahora, en equipo y en tiempo real.*
+*Crea reportajes con scroll animado, gráficos, audio, video y portadas a pantalla completa directamente desde el navegador — en equipo, en tiempo real y listos para incrustar donde quieras.*
 
 <br>
 
@@ -36,7 +36,8 @@ Una aplicación web de una sola página que funciona como un **CMS de periodismo
 |---|---|---|
 | 🎬 | **Portada** | Pantalla completa con imagen o video de fondo y título animado |
 | 🌄 | **Imagen full** | Imagen a pantalla completa con texto superpuesto |
-| 📊 | **Gráfico** | Barras, líneas o torta — se animan al entrar en pantalla |
+| 📊 | **Gráfico** | Barras, líneas o torta — **una o varias series** para comparar, animados al entrar en pantalla |
+| 📜 | **Scrolly** | Una imagen queda fija mientras el texto avanza por pasos |
 | 🎞️ | **Secuencia** | Las imágenes cambian a medida que avanzas (scrollytelling) |
 | 🌠 | **Galería animada** | Fotos que entran desde la izquierda, el centro y la derecha, con texto sobre degradado |
 | 🔍 | **Antes / Después** | Comparación de dos imágenes con control deslizante |
@@ -46,7 +47,9 @@ Una aplicación web de una sola página que funciona como un **CMS de periodismo
 | 🎥 | **Video** | Embebido desde YouTube o Vimeo |
 | 🌐 | **HTML / Embed** | Inserta Flourish, Genially, Datawrapper, Knight Lab… |
 
-M�s: título, subtítulo, párrafo, cita, imagen y separador.
+**Bloques de texto:** título, subtítulo, **párrafo** (con tamaño de letra ajustable y enlaces dentro del texto), **cita** (también admite enlaces), **imagen** (opcionalmente clickeable hacia una URL) y separador.
+
+> 🔗 **Enlaces dentro del texto:** en párrafos y citas escribe `[texto del enlace](https://la-url.com)` y al publicar se convierte en un hipervínculo.
 
 ---
 
@@ -54,14 +57,42 @@ M�s: título, subtítulo, párrafo, cita, imagen y separador.
 
 - 👥 **Edición colaborativa en tiempo real** — varios autores editan el mismo reportaje a la vez y ven los cambios en vivo
 - 🔐 **Login con Google** — cada autor ve sus propios reportajes y los que le comparten
+- 🧱 **5 plantillas listas para rellenar** — arranca con una estructura periodística ya armada
 - 🎭 **3 estilos visuales** — Editorial, Revista y Cine
+- 🖌️ **Fondo configurable** — color, imagen propia o degradados predefinidos
 - ✨ **Glassmorphism** opcional y **revelado palabra por palabra**
 - 🌗 **Modo claro / oscuro** para la edición
 - 🖼️ **Subida de imágenes** integrada (ImgBB)
 - 📜 **Efectos de scroll** — parallax, zoom, reveal y scrollytelling
-- 📑 **Índice lateral** y **tiempo de lectura** automáticos
+- 📑 **Índice lateral**, **tiempo de lectura** y botón **"Volver arriba"** automáticos
+- 👁️ **Vista previa** del reportaje antes de publicar
 - 🔗 **Publicación con URL pública**, compatible con móviles
+- 🧷 **Reportaje embebible** — genera un `<iframe>` para incrustarlo en otras webs
 - 💾 **Autoguardado** en la nube
+
+---
+
+## 🧱 Plantillas listas para usar
+
+Al crear un reportaje puedes partir desde cero o elegir una plantilla con su estructura, estilo y bloques ya dispuestos para solo rellenar:
+
+| | Plantilla | Para qué sirve |
+|---|---|---|
+| 🔎 | **Investigación** | Hallazgo central, datos duros y cronología. Tono serio. |
+| 🎙️ | **Perfil / Entrevista** | Retrato de una persona, con cita grande y audio. |
+| 📊 | **Explicador con datos** | Gráficos, cifras y una visualización embebida. |
+| 🎬 | **Crónica narrativa** | Relato inmersivo con imágenes a pantalla completa. |
+| 📷 | **Fotorreportaje** | La imagen manda; el texto acompaña. |
+
+---
+
+## 🔗 Compartir y publicar
+
+Cuando tu reportaje está listo tienes tres formas de difundirlo:
+
+- **Compartir** genera un **enlace público** (`?r=ID`) que cualquiera puede abrir sin iniciar sesión. En navegadores compatibles aparece el menú nativo para enviarlo por WhatsApp, correo, redes o como **código QR**.
+- **👁 Vista previa** abre el reportaje tal como lo verá el lector, sin necesidad de publicarlo.
+- **</> Insertar** publica el reportaje y te entrega un código **`<iframe>`** listo para pegar en cualquier sitio que acepte HTML (WordPress, Notion, Google Sites, etc.). Puedes ajustar el alto editando `height`.
 
 ---
 
@@ -107,11 +138,15 @@ En tu proyecto Firebase → ⚙️ *Configuración del proyecto* → *Tus apps* 
 **4. Pega las reglas de seguridad**
 En **Firestore → Reglas**, pega las reglas de más abajo y publica.
 
-**5. Crea el índice de colaboración** (una sola vez, lo haces tú y queda para todos tus usuarios)
-En **Firestore → Índices → Crear índice**:
-- Colección: `reportajes`
-- Campo 1: `editores` → **Arrays**
-- Campo 2: `updatedAt` → **Descending**
+**5. Crea los índices** (una sola vez; los haces tú y quedan para todos tus usuarios)
+En **Firestore → Índices → Crear índice**, crea estos **dos** índices compuestos sobre la colección `reportajes`:
+
+| Índice | Campo 1 | Campo 2 |
+|---|---|---|
+| Mis reportajes | `ownerUid` → **Ascending** | `updatedAt` → **Descending** |
+| Compartidos conmigo | `editores` → **Arrays** | `updatedAt` → **Descending** |
+
+> 💡 Si te saltas este paso, la app te avisará en la consola del navegador (F12) con un enlace para crear el índice que falte con un solo clic.
 
 **6. Autoriza tu dominio**
 En **Authentication → Configuración → Dominios autorizados**, agrega `tu-usuario.github.io`.
