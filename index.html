@@ -525,14 +525,15 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChang
 import { getFirestore, collection, addDoc, getDoc, doc, updateDoc, deleteDoc, onSnapshot, query, where, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBr5OcwH9jKdoBVr6Dp_hJto5oNHEbJGtI",
-  authDomain: "ludo-preguntas.firebaseapp.com",
-  databaseURL: "https://ludo-preguntas-default-rtdb.firebaseio.com",
-  projectId: "ludo-preguntas",
-  storageBucket: "ludo-preguntas.appspot.com",
-  messagingSenderId: "154849132864",
-  appId: "1:154849132864:web:93146bf6ad58833a58faa5"
+  apiKey: "AIzaSyA3-Q-CKL2vIUeCBAgQbqGfSw5Sv07F2OE",
+  authDomain: "reportaje-interactivo.firebaseapp.com",
+  projectId: "reportaje-interactivo",
+  storageBucket: "reportaje-interactivo.firebasestorage.app",
+  messagingSenderId: "232447920938",
+  appId: "1:232447920938:web:202c0734e693e2d41c2c53"
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
