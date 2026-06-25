@@ -1258,7 +1258,6 @@ function construirIndice(rep){
   btnArriba.addEventListener('click',()=>lec.scrollTo({top:0,behavior:'smooth'}));
   lec.appendChild(btnArriba);
 }
-}
 function calcularLectura(rep){
   let palabras=0;
   const cuenta=t=>{ if(t) palabras+=String(t).trim().split(/\s+/).filter(Boolean).length; };
